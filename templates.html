@@ -1,0 +1,82 @@
+<template id="tMain">
+  <div id="gridBox">
+    <header>
+      <h1>
+        <img src="" id="logo" alt="">
+        <span id="name"></span>
+      </h1>
+    </header>
+    <div id="products"></div>
+    <div id="cart">
+      <div id="cartHeader">
+        <h1><img src="https://secure.riosalado.edu/CourseResources/fonts/font-awesome/5.1.0-pro/svgs/regular/shopping-cart.svg" alt=""> Cart</h1>
+      </div>
+      <div id="cartList"></div>
+      <div id="cartTotals"></div>
+      <div id="cartForm"></div>
+    </div>
+  </div>
+</template>
+<template id="tProduct">
+  <div><h2 class='title'></h2></div>
+  <div class='image'><img src='' alt=''></div>
+  <div class='bottom'>
+    <span class='description'></span>
+    <label class="optionsLabel" for="options">Options:</label>
+    <select id="options" class="options"></select>
+  </div>
+  <div class='bottom'>
+    <span class='price'></span>
+    <button class='addToCart'>Add to Cart</button>
+  </div>
+</template>
+<template id="tCartEmpty">
+  There are currently no items in your shopping cart.
+</template>
+<template id="tCartList">
+  <table>
+    <thead>
+      <tr>
+        <th class='left'>Item</th>
+        <th id='cart-qty'>Quantity</th>
+        <th class='right' id='cart-price'>Price</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</template>
+<template id="tCartItem">
+  <tr>
+    <td id='cart-'></td>
+    <td class='center'>
+      <input type='number' value='' min='0' id='' aria-labelledby=''/>
+    </td>
+    <td class='right' aria-labelledby=''></td>
+  </tr>
+</template>
+<template id="tCartTotals">
+  <table><tbody>
+    <tr class='topLine'>
+      <td class='left'>Subtotal:</td>
+      <td class='right'><span id="subtotal"></span></td>
+    </tr>
+    <tr>
+      <td class='left'>Tax <small>(<span id="taxRate"></span>%)</small>:</td>
+      <td class='right'>$&nbsp;<span id="tax"></span></td>
+    </tr>
+    <tr>
+      <td class='left'>Shipping <small>(free over $<span id="freeShippingMin"></span>)</small>:</td>
+      <td class='right'><span id="shipping"></span></td>
+    </tr>
+    <tr class='topLine'>
+      <td class='left'>Total:</td>
+      <td class='right'><span id="grandTotal"></span></td>
+    </tr>
+  </tbody></table>
+</template>
+<template id="tCartForm">
+  <form action='checkout.html'>
+    <input type='submit' class='right' value="Check Out" />
+    <input type="button" class='right' value="Empty Cart" onclick="emptyCart()" />
+  </form>
+</template>
