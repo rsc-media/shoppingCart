@@ -1,5 +1,5 @@
-# RSC-Shopping-Cart
- Example Shopping Cart
+# Example Shopping Cart
+Made for us in CIS programming courses.
 
 ## File structure and purpose
 * templates.html - Shared layout templates for various parts of the pages.  Most HTML would be edited here, not in the base HTML files below.  Templates cascade like CSS, so a template in a base HTML would override a template declared in this file.  This is used in checkouts.html to customize a few areas.
