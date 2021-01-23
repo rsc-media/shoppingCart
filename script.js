@@ -11,7 +11,7 @@ var els = { // To be filled with Elements
     "main", "gridBox", "logo", "name", "products", "cart", "cartHeader",
     "cartList", "cartTotals", "cartForm", "alert", "subtotal", "taxRate",
     "tax", "freeShippingMin", "shipping", "grandTotal",
-    "hiddenStore", "hiddenOrder", "hiddenCart"
+    "hiddenStore", "hiddenOrder", "hiddenCart", "nav"
   ]
 };
 els.fill = function() { els.list.forEach(el => { els[el] = document.getElementById(el) }); }
@@ -29,6 +29,8 @@ Promise.all([promiseFetchShop, promiseFetchTemplates])
 // Init
 function init(data) {
   shop = data[0];
+  const meta = [...document.getElementsByTagName("meta")].find(m => m.name == "category");
+  const cat = (meta && meta.content) ? meta.content : "All";
 
   // Load templates
   templates.doc = new DOMParser().parseFromString(data[1], 'text/html');
@@ -45,6 +47,15 @@ function init(data) {
   els.logo.src = shop.logo;
   els.logo.alt = shop.logoAltText;
 
+  // Nav
+  shop.categories.forEach((cat) => {
+    if (location.pathname.split("/").pop() == cat.page) {
+      els.nav.innerHTML += "<span>" + cat.title + "</span>";
+    } else {
+      els.nav.innerHTML += "<a href='" + cat.page + "'>" + cat.title + "</a>";
+    }
+  })
+
   if (isCheckout) {
     // Set up header
     document.title = shop.name + " - Checkout";
@@ -55,7 +66,9 @@ function init(data) {
     // Set up header
     document.title = shop.name + " - Shop";
     // Construct product list
-    shop.products.forEach(function(entry) {
+    var products = shop.products;
+    if (cat != "All") products = products.filter(p => p.Category == cat);
+    products.forEach(function(entry) {
       let item = document.createElement("div");
       item.classList.add("product");
       // Clone Template
