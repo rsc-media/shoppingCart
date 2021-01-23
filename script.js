@@ -49,7 +49,8 @@ function init(data) {
 
   // Nav
   shop.categories.forEach((cat) => {
-    if (location.pathname.split("/").pop() == cat.page) {
+    var page = location.pathname.split("/").pop() || "index.html";
+    if (page == cat.page) {
       els.nav.innerHTML += "<span>" + cat.title + "</span>";
     } else {
       els.nav.innerHTML += "<a href='" + cat.page + "'>" + cat.title + "</a>";
