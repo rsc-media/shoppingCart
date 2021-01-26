@@ -177,6 +177,7 @@ function refreshCart() {
     // Header
     var tbody = els.cartList.getElementsByTagName("tbody")[0];
     var tempTbody = document.createElement("tbody");
+    var prevTR;
 
     // Sort and then iterate through the cart
     shop.cart.sort((a, b) => (a.sku > b.sku) ? 1 : -1);
@@ -189,7 +190,13 @@ function refreshCart() {
       if (!tr) {
         tempTbody.innerHTML = templates.tCartItem.innerHTML;
         tr = tempTbody.getElementsByTagName("tr")[0];
-        tbody.appendChild(tr);
+        if (prevTR && prevTR.nextSibling) {
+          tbody.insertBefore(tr, prevTR.nextSibling);
+        } else {
+          tbody.appendChild(tr);
+        }
+      } else {
+        prevTR = tr;
       }
 
       var tds = tr.getElementsByTagName("td");
