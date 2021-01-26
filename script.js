@@ -186,7 +186,7 @@ function refreshCart() {
       var tr;
       // See if it is already displayed
       var tr = trs.length > 0 && [...trs].find(findDisplayed.bind(item));
-      // Else, Create row
+      // Else, Create row and insert it in order
       if (!tr) {
         tempTbody.innerHTML = templates.tCartItem.innerHTML;
         tr = tempTbody.getElementsByTagName("tr")[0];
@@ -277,5 +277,5 @@ function isInCart(el, index, array) {
 }
 // [].find function - checks if item matches TR in displayed cart
 function findDisplayed(el, index, array) {
-  return el.firstElementChild.id.endsWith(this.sku);
+  return el.firstElementChild.id == "cart-" + this.sku
 }
