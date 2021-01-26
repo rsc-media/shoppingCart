@@ -126,7 +126,7 @@ function handleAddToCart(ev) {
     return product.id === parseInt(pid, 10);
   });
   const option = product.Options[opt];
-  const sku = pid + "-" + opt;
+  const sku = pid.padStart(3,"0") + "-" + opt.padStart(3,"0");
   const found = shop.cart.findIndex(isInCart, sku);
   if (found > -1) {
     shop.cart[found].quantity++; // If item is already in cart, add quantity
