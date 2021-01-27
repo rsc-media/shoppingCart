@@ -11,7 +11,7 @@ var els = { // To be filled with Elements
     "main", "gridBox", "logo", "name", "products", "cart", "cartHeader",
     "cartList", "cartTotals", "cartForm", "alert", "subtotal", "taxRate",
     "tax", "freeShippingMin", "shipping", "grandTotal",
-    "hiddenStore", "hiddenOrder", "hiddenCart"
+    "hiddenStore", "hiddenOrder", "hiddenCart", "nav"
   ]
 };
 els.fill = function() { els.list.forEach(el => { els[el] = document.getElementById(el) }); }
@@ -29,6 +29,8 @@ Promise.all([promiseFetchShop, promiseFetchTemplates])
 // Init
 function init(data) {
   shop = data[0];
+  const meta = [...document.getElementsByTagName("meta")].find(m => m.name == "category");
+  const cat = (meta && meta.content) ? meta.content : "All";
 
   // Load templates
   templates.doc = new DOMParser().parseFromString(data[1], 'text/html');
@@ -45,6 +47,16 @@ function init(data) {
   els.logo.src = shop.logo;
   els.logo.alt = shop.logoAltText;
 
+  // Nav
+  shop.categories.forEach((cat) => {
+    var page = location.pathname.split("/").pop() || "index.html";
+    if (page == cat.page) {
+      els.nav.innerHTML += "<span>" + cat.title + "</span>";
+    } else {
+      els.nav.innerHTML += "<a href='" + cat.page + "'>" + cat.title + "</a>";
+    }
+  })
+
   if (isCheckout) {
     // Set up header
     document.title = shop.name + " - Checkout";
@@ -55,7 +67,9 @@ function init(data) {
     // Set up header
     document.title = shop.name + " - Shop";
     // Construct product list
-    shop.products.forEach(function(entry) {
+    var products = shop.products;
+    if (cat != "All") products = products.filter(p => p.Category == cat);
+    products.forEach(function(entry) {
       let item = document.createElement("div");
       item.classList.add("product");
       // Clone Template
@@ -112,7 +126,7 @@ function handleAddToCart(ev) {
     return product.id === parseInt(pid, 10);
   });
   const option = product.Options[opt];
-  const sku = pid + "-" + opt;
+  const sku = pid.padStart(3,"0") + "-" + opt.padStart(3,"0");
   const found = shop.cart.findIndex(isInCart, sku);
   if (found > -1) {
     shop.cart[found].quantity++; // If item is already in cart, add quantity
@@ -163,6 +177,7 @@ function refreshCart() {
     // Header
     var tbody = els.cartList.getElementsByTagName("tbody")[0];
     var tempTbody = document.createElement("tbody");
+    var prevTR;
 
     // Sort and then iterate through the cart
     shop.cart.sort((a, b) => (a.sku > b.sku) ? 1 : -1);
@@ -171,11 +186,17 @@ function refreshCart() {
       var tr;
       // See if it is already displayed
       var tr = trs.length > 0 && [...trs].find(findDisplayed.bind(item));
-      // Else, Create row
+      // Else, Create row and insert it in order
       if (!tr) {
         tempTbody.innerHTML = templates.tCartItem.innerHTML;
         tr = tempTbody.getElementsByTagName("tr")[0];
-        tbody.appendChild(tr);
+        if (prevTR && prevTR.nextSibling) {
+          tbody.insertBefore(tr, prevTR.nextSibling);
+        } else {
+          tbody.appendChild(tr);
+        }
+      } else {
+        prevTR = tr;
       }
 
       var tds = tr.getElementsByTagName("td");
@@ -256,5 +277,5 @@ function isInCart(el, index, array) {
 }
 // [].find function - checks if item matches TR in displayed cart
 function findDisplayed(el, index, array) {
-  return el.firstElementChild.id.endsWith(this.sku);
+  return el.firstElementChild.id == "cart-" + this.sku
 }
