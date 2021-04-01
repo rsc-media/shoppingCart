@@ -24,6 +24,7 @@
 
 #cart form fieldset input {
   width: 280px;
+	margin-bottom: 2px;
 }
 
 #cart form .combined label {
@@ -41,7 +42,7 @@
 #cart form input#zip {
   width: 76px;
 }
-
+header > nav{display: none;}
 /* Grid */
 #gridBox {
   display: none;
