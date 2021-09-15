@@ -1,58 +1,46 @@
 /* Document Prep */
 @import url('style.css');
-
 #cart {
-
- 
- max-height: unset;
+  max-height: unset;
   height: unset;
   background-color: snow;
-
   border-radius: 5px;
-
 }
 #cart::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
-
 #cart form fieldset {
   display: block;
-   
 }
-
- .combined
- {display: flex;
-     flex-direction: row;
-    gap: 10px;
-
+.combined {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
-.combined div {width: 100%;}
-
+.combined div {
+  width: 100%;
+}
 #cart form fieldset input {
-   width:100%;
-	margin-bottom: 2px;
+  width: 100%;
+  margin-bottom: 2px;
 }
-
-
-header > nav{display: none;}
-
+header > nav {
+  display: none;
+}
 /* Grid */
 #gridBox {
   display: none;
   grid-template-columns: auto;
   grid-template-rows: 50px auto;
-  grid-template-areas: 
+  grid-template-areas:
     "header"
     "cart";
 }
-
 @media screen and (max-width: 670px) {
   #gridBox {
     grid-template-areas:
       "header"
       "cart";
-      grid-template-rows:auto auto;
-    
+    grid-template-rows: auto auto;
   }
-   
 }
