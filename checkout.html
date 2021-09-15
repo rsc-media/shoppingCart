@@ -1,65 +1,46 @@
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shop and Cart Example - Checkout</title>
-  <link rel="stylesheet" href="./checkout.css">
-</head>
-<body>
-<!-- Layout:start -->
-<div id="main">Loading...</div>
-<div id="alert" role="alert"></div>
-<!-- Layout:end -->
-<!-- Templates:start -->
-<template id="tCartEmpty">
-  <hr />
-  <div>
-    <input type='button' class='right' value='Go Home' onclick='window.location.replace("./")' />
-  </div>
-</template>
-<template id="tCartForm">
-  <form action='https://secure.riosalado.edu/cis-course-resources/postscript.aspx' method='POST' onsubmit='clearLS()'>
-    <input type='hidden' id='hiddenStore' name='store' value=''/>
-    <input type='hidden' id='hiddenOrder' name='order' value=''/>
-    <input type='hidden' id='hiddenCart' name='cart' value=''/>
-    <fieldset>
-      <legend>Billing Information</legend>
-      <div><label for='name'>Customer Name:</label><input type='text' id='name' name='name' aria-required="true" /></div>
-      <div><label for='address1'>Address 1:</label><input type='text' id='address1' name='address1' aria-required="true" /></div>
-      <div><label for='address2'>Address 2:</label><input type='text' id='address2' name='address2' /></div>
-      <div>
-        <span class="combined">
-          <label for="city">City</label>, <label for="state">State</label>, <label for="zip">Zip Code</label>
-        </span>
-        <span class="combined">
-          <input type='text' id='city' name='city' aria-required="true" />
-          <input type='text' id='state' name='state' aria-required="true" pattern="[A-Za-z]{2}" aria-description="2 letter abbreviation" placeholder="XX" minlength="2" maxlength="2" />
-          <input type='text' id='zip' name='zip' inputmode="numeric" pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$" aria-required="true" minlength="5" maxlength="10" placeholder="xxxxx-xxxx" aria-description="5 or 9 digit" />
-        </span>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>Credit Card Information</legend>
-      <div><label for='cc'>Card Number</label><input type='text' id='cc' name='cc' aria-required="true" inputmode="numeric" pattern="^[0-9- ]{13,19}$" minlength="13" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" aria-description="16 digit credit card number"/></div>
-      <div><label for='ccv'>Verification Number</label><input type='text' id='ccv' name='ccv' aria-required="true" inputmode="numeric" pattern="^\d{3}$" minlength="3" maxlength="3" placeholder="xxx" aria-description="3 digit" /></div>
-      <div><label for='expiration'>Expiration</label><input type='text' id='expiration' name='expiration' aria-required="true" inputmode="numeric" pattern="^\d\d\/\d\d$" minlength="5" maxlength="5" placeholder="xx/xx"  aria-description="MM/YY" /></div>
-    </fieldset>
-    <div>
-      <input type='submit' class='right' value='Submit Order' />
-      <input type='button' id="back" class='right' value='Go Back' onclick='window.location.replace("./")' />
-    </div>
-  </form>
-</template>
-<template id="tCartItem">
-  <tr>
-    <td id='cart-'></td>
-    <td class='center'></td>
-    <td class='right' aria-labelledby='cart-" + product.id + " cart-price'></td>
-  </tr>
-</template>
-
-<!-- Templates:end -->
-<script src="./script.js"></script>
-</body>
-</html>
+/* Document Prep */
+@import url('style.css');
+#cart {
+  max-height: unset;
+  height: unset;
+  background-color: snow;
+  border-radius: 5px;
+}
+#cart::-webkit-scrollbar {
+  display: none;
+}
+#cart form fieldset {
+  display: block;
+}
+.combined {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.combined div {
+  width: 100%;
+}
+#cart form fieldset input {
+  width: 100%;
+  margin-bottom: 2px;
+}
+header > nav {
+  display: none;
+}
+/* Grid */
+#gridBox {
+  display: none;
+  grid-template-columns: auto;
+  grid-template-rows: 50px auto;
+  grid-template-areas:
+    "header"
+    "cart";
+}
+@media screen and (max-width: 670px) {
+  #gridBox {
+    grid-template-areas:
+      "header"
+      "cart";
+    grid-template-rows: auto auto;
+  }
+}
