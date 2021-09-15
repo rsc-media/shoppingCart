@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Document Prep */
 @import url('style.css');
 #cart {
@@ -43,4 +44,66 @@ header > nav {
       "cart";
     grid-template-rows: auto auto;
   }
+=======
+/* Document Prep */
+@import url('style.css');
+
+#cart {
+  margin: 10px;
+  width: unset;
+  min-height: unset;
+  max-height: unset;
+  height: unset;
+  background-color: snow;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#cart form fieldset {
+  display: inline-block;
+}
+
+#cart form .combined,
+#cart form fieldset label {
+  min-width: 200px;
+  display: inline-block;
+}
+
+#cart form fieldset input {
+  width: 280px;
+	margin-bottom: 2px;
+}
+
+#cart form .combined label {
+  min-width: unset;
+}
+#cart form .combined input {
+  display: inline-block;
+}
+#cart form input#city {
+  width: 160px;
+}
+#cart form input#state {
+  width: 26px;
+}
+#cart form input#zip {
+  width: 76px;
+}
+header > nav{display: none;}
+/* Grid */
+#gridBox {
+  display: none;
+  grid-template-columns: auto;
+  grid-template-rows: 50px auto;
+  grid-template-areas: 
+    "header"
+    "cart";
+}
+@media screen and (max-width: 670px) {
+  #gridBox {
+    grid-template-areas:
+      "header"
+      "cart";
+  }
+>>>>>>> 857a9b24627fd78321cffae83de1063a55b76d3a
 }
